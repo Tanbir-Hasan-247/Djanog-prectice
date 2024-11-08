@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<div style="width: 50%; box-shadow: 4px 4px 8px gray;margin-bottom: auto;margin-left: auto;margin-right: auto;" class="d-grid gap-2">
+  <form method="post" action="/about/">
+    {% csrf_token %}
+    <section class="container d-flex justify-content-center align-items-center pt-3">
+      <div class="p-4 ">
+          <div class="ps-5 pe-5">
+              <div class="mb-3">
+                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Your Name" required name="username">
+              </div>
+              <div class="mb-3">
+                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter Your Email" required name="email">
+              </div>
+              <div class="d-grid gap-2">
+                  <button class="btn btn-primary" type="submit">Send</button>
+              </div>
+          </div>
+      </div>
+  </section>
+</form>
+</div>
+
+  <!-- <h3>{{name}}</h3>
+  <h3>{{email}}</h3> -->
+{%endblock%}
