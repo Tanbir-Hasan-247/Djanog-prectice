@@ -20,3 +20,4 @@ class ExampleForm(forms.Form):
     ]
     favorite_color = forms.ChoiceField(widget=forms.RadioSelect , choices=FAVORITE_COLORS_CHOICES)
     favorite_color = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple , choices=FAVORITE_COLORS_CHOICES)
+    password = forms.CharField(widget = forms.PasswordInput())
