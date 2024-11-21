@@ -3,15 +3,19 @@ from .froms import RegisterForm
 from django.contrib import messages
 # Create your views here.
 def signup(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            messages.success(request, 'Account created successfully')
-            form.save(commit=True)
-    else:
-        form = RegisterForm()
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                messages.success(request, 'Account created successfully')
+                form.save(commit=True)
+        else:
+            form = RegisterForm()
 
-    return render(request, 'signup.html', {'form':form})
+        return render(request, 'signup.html', {'form':form})
+    else:
+        return redirect('profile')
+    
 
 #for longin logout
 from django.contrib.auth.forms import AuthenticationForm

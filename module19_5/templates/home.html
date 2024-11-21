@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Musicians Directory</h2>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Musician Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Album Rating</th>
+            <th scope="col">Instrument Type</th>
+            <th scope="col">Album Name</th>
+            <th scope="col">Release Date</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for musician in data %}
+            {% for album in musician.album_set.all %}
+                <tr>
+                    <td>{{ album.id }}</td>
+                    <td>{{ musician.first_name }} {{ musician.last_name }}</td>
+                    <td>{{ musician.email }}</td>
+                    <td>{{ album.rating }}</td>
+                    <td>{{ musician.instrument_type }}</td>
+                    <td>{{ album.album_name }}</td>
+                    <td>{{ album.release_date }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}
