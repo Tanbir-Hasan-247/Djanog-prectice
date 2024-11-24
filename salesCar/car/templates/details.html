@@ -1,0 +1,106 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+<style>
+  .details {
+    height: 70%;
+  }
+</style>
+
+<div class="main-container">
+  <div class="container d-flex">
+    <div class="col-5 p-5">
+      <img
+        src="{{ car.image.url }}"
+        class="card-img-top details"
+        alt="{{ car.name }}"
+      />
+    </div>
+
+    <div class="col-7 p-5">
+      <div class="details p-4">
+        <h5 class="card-title">{{ car.name }}</h5>
+        <h6>Price: {{ car.price }} Taka</h6>
+        <h6>Brand: {{ car.brand }}</h6>
+        {% if user.is_authenticated %}
+        <h6>Quantity: {{ car.quantity }}</h6>
+        {% endif %}
+        <p class="card-text">{{ car.description }}</p>
+
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'buy-car' car.id %}">
+          {% csrf_token %}
+          <button
+            class="btn btn-primary"
+          >
+            Buy Now
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="pt-3" style="border-style: dashed; border-color: rgb(104, 98, 98)" />
+
+<div class="container comments-section">
+  <h4>Comments</h4>
+  <div>
+    {% for comment in car.comments.all %}
+    <div class="comment">
+      <strong>{{ comment.name }}</strong>
+      <p>{{ comment.body }}</p>
+      <small>Posted on {{ comment.created_on }}</small>
+    </div>
+    <hr />
+    {% empty %}
+    <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+  </div>
+
+  {% if user.is_authenticated %}
+  <!-- Add Comment Button -->
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#addCommentModal"
+  >
+    Add Comment
+  </button>
+  {% endif %}
+</div>
+
+<!-- Add Comment Modal -->
+<div
+  class="modal fade"
+  id="addCommentModal"
+  tabindex="-1"
+  aria-labelledby="addCommentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCommentModalLabel">Add Comment</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'add-comment' car.id %}">
+          {% csrf_token %} {% for fm in form %}
+          <div class="mb-3">
+            {{ fm.label_tag }} {{ fm }}
+            <div class="text-danger">{{ fm.errors|striptags }}</div>
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

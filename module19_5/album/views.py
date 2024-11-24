@@ -3,7 +3,10 @@ from django.urls import reverse_lazy
 from .models import Album
 from .forms import AlbumForm
 from musician.models import Musician
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
+@method_decorator(login_required, name='dispatch')
 class AddAlbumView(CreateView):
     model = Album
     form_class = AlbumForm
@@ -18,6 +21,7 @@ class AddAlbumView(CreateView):
 
 
 from django.views.generic.edit import UpdateView
+@method_decorator(login_required, name='dispatch')
 
 class EditAlbumView(UpdateView):
     model = Album

@@ -2,7 +2,10 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import Musician
 from .forms import MusicianForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
+@method_decorator(login_required, name='dispatch')
 class AddMusicianView(CreateView):
     model = Musician
     form_class = MusicianForm
@@ -15,6 +18,7 @@ class AddMusicianView(CreateView):
 
 
 from django.views.generic.edit import UpdateView
+@method_decorator(login_required, name='dispatch')
 
 class EditMusicianView(UpdateView):
     model = Musician
@@ -29,6 +33,7 @@ class EditMusicianView(UpdateView):
 
 
 from django.views.generic.edit import DeleteView
+@method_decorator(login_required, name='dispatch')
 
 class DeleteMusicianView(DeleteView):
     model = Musician

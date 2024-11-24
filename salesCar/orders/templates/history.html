@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<style>
+  .card-img-top {
+    width: 100%; /* Makes the image responsive */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover; /* Ensures the image fills the space appropriately */
+    max-height: 216px; /* Optional: Limits height for a consistent layout */
+  }
+</style>
+<div class="d-grid gap-2">
+    <div class="btn btn-info" style="pointer-events: none;"><h4>Order History</h4></div>
+    </div>
+
+<div class="d-flex flex-wrap justify-content-center p-5">
+  {% for order in data %}
+  <div class="p-3">
+    <div class="card" style="width: 18rem;">
+      <img src="{{ order.car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ order.car.name }}</h5>
+        <h6>Price: {{ order.car.price }} Taka</h6>
+        <h6>Brand: {{ order.car.brand }}</h6>
+        <h6>Order Date: {{order.order_date}}</h6>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+

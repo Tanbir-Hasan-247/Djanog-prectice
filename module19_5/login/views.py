@@ -62,10 +62,6 @@ class ProfileView(TemplateView):
         return context
 
 
-# from django.contrib.auth.views import LogoutView as DjangoLogoutView
-
-# class LogoutView(DjangoLogoutView):
-#     next_page = reverse_lazy('homepage')  # Redirect after logout
 from django.contrib.auth import logout
 def Logout(request):
     logout(request)

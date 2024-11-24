@@ -1,0 +1,54 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+
+<style>
+  .card-img-top {
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    max-height: 216px; 
+  }
+</style>
+
+<div class="container p-3 d-flex flex-wrap align-items-center">
+<div class="col-6 ">
+  <img style="width: 80%;" src="{% static 'car.jpg' %}" alt="">
+</div>
+
+<div class="col-6 ">
+  <h2>Welcome to CarSales!</h2>
+<p>
+  CarSales is a comprehensive online platform designed to connect car buyers and sellers in a seamless, user-friendly environment. Whether you're looking to buy your first car or upgrade to a new model, CarSales offers a wide selection of vehicles from trusted brands. Our website allows users to easily browse car listings, filter by brand, and get detailed information about each car including its price, features, and availability.</p>
+</div>
+</div>
+
+<hr class="pt-3" style="border-style: dashed; border-color: rgb(104, 98, 98)" />
+<div class="d-flex flex-wrap justify-content-start">
+  {% for brd in brand %}
+    <a href="{% url 'category_wise_post' brd.slug %}" class="btn btn-secondary col-2 p-1 m-2">{{ brd.name }}</a>
+  {% endfor %}
+</div>
+
+<hr class="pt-3" style="border-style: dashed; border-color: rgb(104, 98, 98)" />
+<div class="d-grid gap-2">
+<div class="btn btn-info" style="pointer-events: none;"><h4>{{data | length}} Car Available</h4></div>
+</div>
+<div class="d-flex flex-wrap justify-content-center ">
+  {% for car in data %}
+  <div class="p-3">
+    <div class="card" style="width: 18rem;">
+      <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ car.name }}</h5>
+        <h6>Price: {{ car.price }} Taka</h6>
+        <h6>Brand: {{ car.brand }}</h6>
+        <p class="card-text">{{ car.description | truncatewords:7 }}</p>
+        <a href="{% url 'details' car.id %}" class="btn btn-primary">Details</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
